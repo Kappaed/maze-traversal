@@ -1,0 +1,49 @@
+.container {
+  margin: 100px calc((100% - 500px) / 2);
+  display: grid;
+  grid-template-columns: repeat(10, auto);
+}
+
+.container:first-child {
+  border-left: 1px solid black;
+}
+
+.container:nth-child(11n + 11) {
+  border-left: 1px solid black;
+}
+
+.cell {
+  width: 50px;
+  height: 50px;
+  margin-top: -1px;
+  margin-left: -1px;
+  border: 1px solid black;
+  border-left: none;
+}
+
+.rlLeft {
+  border-left: None;
+}
+.rRight {
+  border-right: None;
+}
+
+.rBottom {
+  border-bottom: None;
+}
+
+.rTop {
+  border-top: None;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.pink {
+  background-color: pink;
+}
+
+.black {
+  background-color: black;
+}
