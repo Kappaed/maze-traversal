@@ -4,11 +4,11 @@
   grid-template-columns: repeat(10, auto);
 }
 
-.container:first-child {
+.container > :first-child {
   border-left: 1px solid black;
 }
 
-.container:nth-child(11n + 11) {
+.container > :nth-child(10n + 11) {
   border-left: 1px solid black;
 }
 
@@ -22,18 +22,18 @@
 }
 
 .rlLeft {
-  border-left: None;
+  border-left: None !important;
 }
 .rRight {
-  border-right: None;
+  border-right: None !important;
 }
 
 .rBottom {
-  border-bottom: None;
+  border-bottom: None !important;
 }
 
 .rTop {
-  border-top: None;
+  border-top: None !important;
 }
 
 .orange {
@@ -46,4 +46,12 @@
 
 .black {
   background-color: black;
+}
+
+.gray {
+  background-color: gray;
+}
+
+.white {
+  background-color: white;
 }
