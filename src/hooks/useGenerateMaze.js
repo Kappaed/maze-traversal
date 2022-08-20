@@ -1,29 +1,55 @@
 import { useEffect, useRef, useState } from "react";
 import utilityFs from "../utility";
+import Queue from "../structures/queue";
 
-const useGenerateMaze = (mData, dispatch) => {
+const useGenerateMaze = (
+  mData,
+  dispatch,
+  { setCanTraverse, setTraversalMethod }
+) => {
   const [startGenerate, setStartGenerate] = useState(true);
   const visited = useRef(new Set());
   const { src, maze } = mData;
   const potential = useRef(new Set([JSON.stringify(src)]));
+  const twoRecent = useRef(new Queue());
 
   useEffect(() => {
     const tID = setTimeout(() => {
       if (startGenerate) {
         if (potential.current.size < 1) {
           // console.log(maze, src);
+          while (twoRecent.current.length > 0) {
+            // console.log(twoRecent);
+            const poppedCoord = twoRecent.current.dequeue();
+            dispatch({
+              type: "change-color",
+              coord: poppedCoord,
+              color: "white",
+            });
+          }
           setStartGenerate(false);
+          setCanTraverse(true);
+          setTraversalMethod(utilityFs.availableTraversalMethods.aStar);
           return;
         }
-        let next_source = [...potential.current].reduce((agg, curr) =>
-          agg > curr ? curr : agg
-        );
+        const potential_arr = [...potential.current];
+        let next_source = potential_arr[utilityFs.getRandomIdx(potential_arr)];
         potential.current.delete(next_source);
 
         if (next_source in visited.current) {
           return;
         }
+
         next_source = JSON.parse(next_source);
+        if (twoRecent.current.length >= 2) {
+          const poppedCoord = twoRecent.current.dequeue();
+          dispatch({
+            type: "change-color",
+            coord: poppedCoord,
+            color: "white",
+          });
+        }
+        twoRecent.current.enqueue(next_source);
 
         const neighbors = utilityFs.getNeighs(next_source, maze);
         // console.log(neighbors.map((coord) => maze[coord[0]][coord[1]]));
@@ -43,16 +69,9 @@ const useGenerateMaze = (mData, dispatch) => {
             from: randomVisited,
             to: next_source,
           });
-        } else {
-          const edgeDirec = utilityFs.getEdgeDirection(next_source);
-          dispatch({
-            type: "remove-border",
-            coord: next_source,
-            dir: edgeDirec,
-          });
         }
 
-        dispatch({ type: "change-color", coord: next_source, color: "white" });
+        dispatch({ type: "change-color", coord: next_source, color: "orange" });
 
         toTraverse.forEach((neigh) => {
           if (!visited.current.has(JSON.stringify(neigh))) {
@@ -65,7 +84,7 @@ const useGenerateMaze = (mData, dispatch) => {
       }
     }, 50);
     return () => clearTimeout(tID);
-  }, [startGenerate, dispatch, maze]);
+  }, [startGenerate, dispatch, maze, setCanTraverse, setTraversalMethod]);
 
   return { startGenerate, setStartGenerate };
 };

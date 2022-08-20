@@ -1,4 +1,26 @@
 const getRandomIdx = (arr) => Math.floor(Math.random() * arr.length);
+
+const twoCoordsEqual = (c1, c2) => {
+  let output = true;
+  c1.forEach((c, i) => {
+    if (c !== c2[i]) {
+      output = false;
+    }
+  });
+  return output;
+};
+
+const getPath = (src, dest, parents) => {
+  let curr = dest;
+  let paths = [];
+  while (!twoCoordsEqual(curr, src)) {
+    paths.push(curr);
+    curr = parents[JSON.stringify(curr)];
+  }
+  paths.push(src);
+  paths.reverse();
+  return paths;
+};
 const getRandomMazeCoord = (maze) => {
   const candidates = [];
   for (let i = 0; i < maze[0].length; i++) {
@@ -34,6 +56,22 @@ const getNeighs = (coord, maze) => {
   });
   return neighs;
 };
+
+const filterCanTraverse = (neighs, coord, maze) =>
+  neighs.filter((neigh) => {
+    const neighObj = maze[neigh[0]][neigh[1]];
+    const srcObj = maze[coord[0]][coord[1]];
+    if (neigh[0] - coord[0] === 1 && !neighObj.top && !srcObj.bottom) {
+      return true;
+    } else if (neigh[0] - coord[0] === -1 && !neighObj.bottom && !srcObj.top) {
+      return true;
+    } else if (neigh[1] - coord[1] === 1 && !neighObj.left && !srcObj.right) {
+      return true;
+    } else if (neigh[1] - coord[1] === -1 && !neighObj.right && !srcObj.left) {
+      return true;
+    }
+    return false;
+  });
 const getDirec = (fromCoord, toCoord) => {
   if (toCoord[0] - fromCoord[0] === 1) {
     return "down";
@@ -99,10 +137,20 @@ const initMaze = (initialState) => {
 
   const [randomY, randomX] = getRandomMazeCoord(initialState.maze);
   initialState.src = [randomY, randomX];
+  const srcPeelDir = getEdgeDirection([randomY, randomX]);
+  initialState.maze[randomY][randomX][srcPeelDir] = false;
   const [destCoords, peelDir] = getRandomDest([randomY, randomX]);
   initialState.maze[destCoords[0]][destCoords[1]][peelDir] = false;
   initialState.currPos = initialState.src;
+  initialState.dest = destCoords;
 };
+
+const availableTraversalMethods = Object.freeze({
+  aStar: 0,
+  bfs: 1,
+  dfs: 2,
+});
+
 const fs = {
   getRandomIdx,
   getRandomMazeCoord,
@@ -111,5 +159,9 @@ const fs = {
   getEdgeDirection,
   getRandomDest,
   initMaze,
+  availableTraversalMethods,
+  filterCanTraverse,
+  getPath,
+  twoCoordsEqual,
 };
 export default fs;
