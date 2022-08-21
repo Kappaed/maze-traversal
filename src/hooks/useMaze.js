@@ -4,15 +4,17 @@ import utilityFs from "../utility";
 const reducer = (state, action) => {
   switch (action.type) {
     case "clear-colors":
-      const clearColorsCopy = state.maze((row) => row.slice());
-      clearColorsCopy.forEach((row) => {
-        row.forEach((cell, i) => {
-          if (!(cell.color === "white")) {
-            row[i].color = "white";
-          }
+      const clearColorsCopy = state.maze.map((row) => row.slice());
+      clearColorsCopy.forEach((row, i) => {
+        row.forEach((cell, j) => {
+          // if (!(cell.color === "white")) {
+          clearColorsCopy[i][j].color = "white";
+          // }
         });
       });
-      return { ...state, maze: clearColorsCopy };
+      // console.log(clearColorsCopy, "hello");
+
+      return { ...state, currPos: state.src, maze: clearColorsCopy };
     case "remove-border":
       const remove_border_copy = state.maze.map((row) => row.slice());
       const [coordY, coordX] = action.coord;

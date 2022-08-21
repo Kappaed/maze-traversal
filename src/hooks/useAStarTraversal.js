@@ -24,6 +24,7 @@ const useAStarTraversal = (
   const gValues = useRef({ [JSON.stringify(src)]: 0 });
   const parents = useRef({});
   const algSteps = useRef(0);
+
   useEffect(() => {
     if (!canTraverse) {
       openList.current = MinPriorityQueue.fromArray([[0, src]]);
@@ -40,15 +41,13 @@ const useAStarTraversal = (
     ) {
       const tID = setTimeout(() => {
         if (openList.current.isEmpty()) {
-          // console.log(currPos, dest, openList.current.toArray());
-          // console.log(gValues.current);
-          // console.log("blah");
           setCanTraverse(false);
           return;
         }
         algSteps.current += 1;
         const [_f, sourceCoord] = openList.current.dequeue();
         dispatch({ type: "move-pos", new: sourceCoord });
+
         const potentialNeighbours = utilityFS.getNeighs(sourceCoord, maze);
         const canTraverseNeighbours = utilityFS.filterCanTraverse(
           potentialNeighbours,
@@ -88,12 +87,16 @@ const useAStarTraversal = (
       }, 100);
       return () => clearTimeout(tID);
     }
-  }, [canTraverse, traversalMethod, dest, dispatch, setCanTraverse, maze, src]);
-
-  return {
-    shortestPathSteps: gValues.current?.dest,
-    algorithmSteps: algSteps.current,
-  };
+  }, [
+    canTraverse,
+    traversalMethod,
+    dest,
+    dispatch,
+    setCanTraverse,
+    maze,
+    src,
+    newAverageSteps,
+  ]);
 };
 
 export default useAStarTraversal;

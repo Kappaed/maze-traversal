@@ -28,6 +28,7 @@ const useDFSTraversal = (
       stack.current = [src];
       shortestPathlength.current = 0;
       algSteps.current = 0;
+      parents.current = {};
     }
   }, [canTraverse, src]);
 
@@ -79,8 +80,16 @@ const useDFSTraversal = (
       }, 100);
       return () => clearTimeout(tID);
     }
-  }, [traversalMethod, dest, dispatch, maze, canTraverse, setCanTraverse, src]);
-  return { shortestPathLength: shortestPathlength.current };
+  }, [
+    traversalMethod,
+    dest,
+    dispatch,
+    maze,
+    canTraverse,
+    setCanTraverse,
+    src,
+    newAverageSteps,
+  ]);
 };
 
 export default useDFSTraversal;

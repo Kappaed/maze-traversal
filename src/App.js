@@ -4,14 +4,17 @@ import Maze from "./components/Maze";
 import useGenerateMaze from "./hooks/useGenerateMaze";
 import useTraverseMaze from "./hooks/useTraverseMaze";
 import useMaze from "./hooks/useMaze";
-import utilityFS from "./utility";
+import ButtonsRow from "./components/ButtonsRow";
 import DataSummary from "./components/DataSummary";
+import utilityFs from "./utility";
 
 function App() {
   //initially startGenerate is set to True, set default to False and toggle with button later.
   const { mazeState, dispatch } = useMaze();
   const [canTraverse, setCanTraverse] = useState(false);
-  const [traversalMethod, setTraversalMethod] = useState(null);
+  const [traversalMethod, setTraversalMethod] = useState(
+    utilityFs.availableTraversalMethods.aStar
+  );
   const [averagePathSteps, setAveragePathSteps] = useState({
     shortest_path: { val: 0, num_runs: 0 },
     dfs_path: { val: 0, num_runs: 0 },
@@ -25,9 +28,7 @@ function App() {
     setAveragePathSteps((averagePathSteps) => ({
       ...averagePathSteps,
       [key]: {
-        val:
-          (averagePathSteps[key].val + curr_val) /
-          (averagePathSteps[key].num_runs + 1),
+        val: averagePathSteps[key].val + curr_val,
         num_runs: averagePathSteps[key].num_runs + 1,
       },
     }));
@@ -35,11 +36,11 @@ function App() {
 
   const { startGenerate, setStartGenerate } = useGenerateMaze(
     mazeState,
-    dispatch,
-    { setCanTraverse, setTraversalMethod }
+    dispatch
+    // { setCanTraverse, setTraversalMethod }
   );
 
-  const stepsObj = useTraverseMaze(
+  useTraverseMaze(
     { canTraverse, setCanTraverse },
     traversalMethod,
     { ...mazeState, dispatch },
@@ -48,7 +49,17 @@ function App() {
 
   return (
     <div className="App">
+      <div class="title">Maze Traversal</div>
       <Maze data={mazeState.maze} />
+      <ButtonsRow
+        generateInfo={{ startGenerate, setStartGenerate }}
+        traversalInfo={{ setCanTraverse, canTraverse }}
+        traversalMethodInfo={{
+          selectionState: traversalMethod,
+          setSelectionState: setTraversalMethod,
+        }}
+        mazeDispatch={dispatch}
+      />
       <DataSummary averagePathValue={averagePathSteps} />
     </div>
   );

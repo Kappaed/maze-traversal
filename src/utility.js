@@ -151,6 +151,12 @@ const availableTraversalMethods = Object.freeze({
   dfs: 2,
 });
 
+const traversalText = {
+  [availableTraversalMethods.aStar]: "A*",
+  [availableTraversalMethods.dfs]: "DFS",
+  [availableTraversalMethods.bfs]: "BFS",
+};
+
 const fs = {
   getRandomIdx,
   getRandomMazeCoord,
@@ -163,5 +169,6 @@ const fs = {
   filterCanTraverse,
   getPath,
   twoCoordsEqual,
+  traversalText,
 };
 export default fs;

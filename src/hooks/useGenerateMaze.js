@@ -2,11 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import utilityFs from "../utility";
 import Queue from "../structures/queue";
 
-const useGenerateMaze = (
-  mData,
-  dispatch,
-  { setCanTraverse, setTraversalMethod }
-) => {
+const useGenerateMaze = (mData, dispatch) => {
   const [startGenerate, setStartGenerate] = useState(true);
   const visited = useRef(new Set());
   const { src, maze } = mData;
@@ -14,8 +10,16 @@ const useGenerateMaze = (
   const twoRecent = useRef(new Queue());
 
   useEffect(() => {
+    if (!startGenerate) {
+      visited.current = new Set();
+      potential.current = new Set([JSON.stringify(src)]);
+      twoRecent.current = new Queue();
+    }
+  }, [startGenerate, src]);
+  useEffect(() => {
     const tID = setTimeout(() => {
       if (startGenerate) {
+        // console.log("test");
         if (potential.current.size < 1) {
           // console.log(maze, src);
           while (twoRecent.current.length > 0) {
@@ -28,8 +32,8 @@ const useGenerateMaze = (
             });
           }
           setStartGenerate(false);
-          setCanTraverse(true);
-          setTraversalMethod(utilityFs.availableTraversalMethods.aStar);
+          // setCanTraverse(true);
+          // setTraversalMethod(utilityFs.availableTraversalMethods.aStar);
           return;
         }
         const potential_arr = [...potential.current];
@@ -82,9 +86,9 @@ const useGenerateMaze = (
 
         visited.current.add(JSON.stringify(next_source));
       }
-    }, 50);
+    }, 20);
     return () => clearTimeout(tID);
-  }, [startGenerate, dispatch, maze, setCanTraverse, setTraversalMethod]);
+  }, [startGenerate, dispatch, maze]);
 
   return { startGenerate, setStartGenerate };
 };

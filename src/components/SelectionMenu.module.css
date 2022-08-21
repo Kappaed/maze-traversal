@@ -1,0 +1,60 @@
+.container {
+  width: 70px;
+  font-size: 16px;
+  position: relative;
+}
+
+.selectedItem {
+  border-radius: 4px;
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  background-color: salmon;
+  color: white;
+  cursor: pointer;
+}
+
+.container:hover > div:first-child {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.selectionMenu {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease-in-out;
+  min-width: 70px;
+
+  background: salmon;
+}
+
+.selectionMenuItem {
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  color: white;
+  background: salmon;
+  outline: none;
+  text-decoration: none;
+  border: none;
+  /* border-radius: 4px; */
+}
+
+.noHover {
+  pointer-events: none;
+}
+
+.selectionMenuItem:hover {
+  background: whitesmoke;
+  color: salmon;
+  cursor: pointer;
+}
+
+.selectedItem:hover + div,
+.selectionMenu:hover {
+  opacity: 1;
+  visibility: visible;
+}

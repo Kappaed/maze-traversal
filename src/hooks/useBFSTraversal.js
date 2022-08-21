@@ -28,6 +28,7 @@ const useBFSTraversal = (
       queue.current = new Queue();
       queue.current.enqueue(src);
       algSteps.current = 0;
+      parents.current = {};
     }
   }, [canTraverse, src]);
 
@@ -79,8 +80,16 @@ const useBFSTraversal = (
       }, 100);
       return () => clearTimeout(tID);
     }
-  }, [traversalMethod, dest, dispatch, maze, canTraverse, setCanTraverse, src]);
-  return {};
+  }, [
+    traversalMethod,
+    dest,
+    dispatch,
+    maze,
+    canTraverse,
+    setCanTraverse,
+    src,
+    newAverageSteps,
+  ]);
 };
 
 export default useBFSTraversal;

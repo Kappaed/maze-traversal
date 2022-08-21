@@ -10,26 +10,9 @@ const useTraverseMaze = (
   mazeInfo,
   newAverageSteps
 ) => {
-  const aStarSteps = useAStarTraversal(
-    mazeInfo,
-    traversalInfo,
-    traverseMethod,
-    newAverageSteps
-  );
-  const BFSSteps = useBFSTraversal(
-    mazeInfo,
-    traversalInfo,
-    traverseMethod,
-    newAverageSteps
-  );
-  const DFSSteps = useDFSTraversal(
-    mazeInfo,
-    traversalInfo,
-    traverseMethod,
-    newAverageSteps
-  );
-
-  return { [UtilityFS.availableTraversalMethods.aStar]: aStarSteps };
+  useAStarTraversal(mazeInfo, traversalInfo, traverseMethod, newAverageSteps);
+  useBFSTraversal(mazeInfo, traversalInfo, traverseMethod, newAverageSteps);
+  useDFSTraversal(mazeInfo, traversalInfo, traverseMethod, newAverageSteps);
 };
 
 export default useTraverseMaze;

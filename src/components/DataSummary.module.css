@@ -1,6 +1,12 @@
 .container {
   display: flex;
-  margin: 0 calc((100% - 500px) / 2 - 80px);
+  margin: 0 max(calc((100% - 500px) / 2 - 120px), 20px);
   justify-content: space-between;
-  font-size: 13px;
+  font-size: 12px;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.text {
+  margin: 0 10px;
 }

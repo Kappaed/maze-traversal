@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+.title {
+  font-size: 20px;
+  font-family: "Aboreto", cursive;
+  text-align: center;
+  color: orange;
+  margin-top: 10px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

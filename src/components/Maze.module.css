@@ -1,5 +1,5 @@
 .container {
-  margin: 50px calc((100% - 500px) / 2) 50px calc((100% - 500px) / 2);
+  margin: 20px calc((100% - 500px) / 2) 30px calc((100% - 500px) / 2);
   display: grid;
   grid-template-columns: repeat(10, auto);
 }

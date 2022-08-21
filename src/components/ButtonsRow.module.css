@@ -1,0 +1,61 @@
+.container {
+  display: flex;
+  margin: 0 calc((100% - 500px) / 2 + 50px);
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.container > :last-child {
+  margin-right: 0;
+}
+
+.button {
+  border: none;
+  color: white;
+  text-align: center;
+  padding: 8px 20px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+  position: relative;
+  margin-right: 20px;
+}
+
+.button-orange:hover:enabled {
+  background-color: black;
+  color: orange;
+  cursor: pointer;
+}
+
+.button-orange {
+  background-color: orange;
+}
+
+.button-pink {
+  background-color: lightpink;
+}
+
+.button-pink:hover:enabled {
+  background-color: whitesmoke;
+  color: lightpink;
+  cursor: pointer;
+}
+
+.warning-message {
+  color: red;
+  font-weight: lighter;
+  font-size: 12px;
+  opacity: 0%;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 115%;
+  left: 50%;
+  transform: translate(-50%);
+  transition: all 0.2s ease-out;
+}
+
+.warning-message-show {
+  opacity: 100%;
+}
