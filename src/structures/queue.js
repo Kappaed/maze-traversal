@@ -1,4 +1,5 @@
-//https://www.javascripttutorial.net/javascript-queue/
+//https://www.javascripttutorial.net/javascript-queue/ - don't want to use array shift to pop
+// start of the queue because it is O(n)
 class Queue {
   constructor() {
     this.elements = {};
