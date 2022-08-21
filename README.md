@@ -3,6 +3,10 @@
 **random maze generator** with **traversal algorithms** visualised using **create-react-app**.
 _no visualisation libraries used_.
 
+## preview
+
+![website screenshot](screenshot.png)
+
 ## maze generation algorithms
 
 [**Prim's algorithm**](https://en.wikipedia.org/wiki/Prim%27s_algorithm) with random neighbour selection.
